@@ -4,15 +4,16 @@
 <head><title>員工資料</title></head>
 <body>
 <div>
-<h2>員工資料</h2>
+<h2>修改員工資料</h2>
 <form method="get" action="UpdateEmp">
 <jsp:useBean id="emp" scope="request" class="com.lcpan.bean.EmpBean"></jsp:useBean>
-員工編號<input type="text" disabled value=<%=emp.getEmpno() %>>
-姓名<input type="text" value=<%=emp.getEname() %>>
-到職日<input type="text" value=<%=emp.getHiredate() %>>
-薪水<input type="text" value=<%=emp.getSalary() %>>
-部門編號<input type="text" value=<%=emp.getDeptno() %>>
-職稱<input type="text" value=<%=emp.getTitle() %>>
+<!-- 不能設定disabled 會null -->
+員工編號<input type="text" readonly value=<%=emp.getEmpno() %> name="empno"/>
+姓名<input type="text" value=<%=emp.getEname() %> name="ename"/>
+到職日<input type="text" value=<%=emp.getHiredate() %> name="hiredate"/>
+薪水<input type="text" value=<%=emp.getSalary() %> name="salary" />
+部門編號<input type="text" value=<%=emp.getDeptno() %> name="deptno"/>
+職稱<input type="text" value=<%=emp.getTitle() %> name="title" />
 <input type="submit" value="確定" />
 
 </form>

@@ -23,29 +23,27 @@ public class UpdateEmp extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) 
 			throws ServletException, IOException {
 		String empno = request.getParameter("empno");
-		String sql = "select * from [employee] where empno=?";
-		
+		String ename = request.getParameter("ename");
+		String hiredate = request.getParameter("hiredate");
+		String salary = request.getParameter("salary");
+		String deptno = request.getParameter("deptno");
+		String title = request.getParameter("title");
+		String sql = "UPDATE [employee] SET ename = ?, hiredate = ?, salary = ?, deptno = ?, title = ? WHERE empno = ?";
 		try {
 			Context context = new InitialContext();
 			DataSource ds = (DataSource)context
 					.lookup("java:/comp/env/jdbc/servdb");
 			conn = ds.getConnection();
 			PreparedStatement pstmt = conn.prepareStatement(sql);
-			pstmt.setString(1, empno);
-			ResultSet rs = pstmt.executeQuery();
-			EmpBean emp = new EmpBean();
-			// 移動到cursor1
-			if(rs.next()) {
-			// Put cursor1 data to new a EmpBean
-				emp.setEmpno(rs.getString("empno"));
-				emp.setEname(rs.getString("ename"));
-				emp.setHiredate(rs.getString("hiredate"));
-				emp.setSalary(rs.getString("salary"));
-				emp.setDeptno(rs.getString("deptno"));
-				emp.setTitle(rs.getString("title"));
-			};
-			System.out.println(emp.getEmpno());
-			request.setAttribute("emp", emp);
+			pstmt.setString(1, ename);
+			pstmt.setString(2, hiredate);
+			pstmt.setString(3, salary);
+			pstmt.setString(4, deptno);
+			pstmt.setString(5, title);
+			pstmt.setString(6, empno);
+			int updateCount = pstmt.executeUpdate();
+			
+			request.setAttribute("updateCount", updateCount);
 			pstmt.close();
 			request.getRequestDispatcher("/m11/Update.jsp")
 			.forward(request, response);
